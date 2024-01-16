@@ -1,15 +1,23 @@
 package core;
 
-public class Lecturer extends Human {
+public class Admin extends Human {
 	private String password;
 	
-	public Lecturer() {
+	public Admin() {
 		
 	}
 	
-	public Lecturer(String code, String password) {
+	public Admin(String code, String password) {
 		super(code);
 		this.password = password;
+	}
+	
+	public String getCode() {
+		return code;
+	}
+	
+	public void setCode(String code) {
+		this.code = code;
 	}
 	
 	public String getFullname() {
@@ -26,13 +34,5 @@ public class Lecturer extends Human {
 	
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getCode() {
-		return code;
-	}
-	
-	public void setCode(String code) {
-		this.code = code;
 	}
 }

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="701.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeController">
    <top>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -28,7 +28,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Danh sách sinh viên" GridPane.halignment="CENTER">
+            <Label text="Danh sách các cuốn sách" GridPane.halignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -51,18 +51,21 @@
       </GridPane>
    </top>
    <center>
-      <TableView fx:id="studentTBV" onMouseClicked="#onClickRow" prefHeight="403.0" prefWidth="544.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="bookTBV" onMouseClicked="#onClickRow" prefHeight="508.0" prefWidth="527.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="codeCol" prefWidth="121.0" text="Mã sinh viên" />
-          <TableColumn fx:id="fullnameCol" prefWidth="203.0" text="Họ tên" />
-            <TableColumn fx:id="classCol" minWidth="0.0" prefWidth="167.0" text="Lớp" />
+          <TableColumn fx:id="codeCol" prefWidth="53.0" text="Mã sách" />
+          <TableColumn fx:id="nameCol" prefWidth="163.0" text="Tên sách" />
+            <TableColumn fx:id="authorCol" minWidth="0.0" prefWidth="63.0" text="Tác giả" />
+            <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="85.0" text="Giá tiền" />
+            <TableColumn fx:id="quantityCol" minWidth="0.0" prefWidth="73.0" text="Số lượng" />
+            <TableColumn fx:id="publishedYearCol" minWidth="0.0" prefWidth="87.0" text="Năm XB" />
         </columns>
       </TableView>
    </center>
    <right>
       <VBox prefHeight="403.0" prefWidth="205.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Mã sinh viên">
+            <Label text="Mã sách">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -72,18 +75,34 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </TextField>
-            <Label text="Họ tên" />
+            <Label text="Tên sách" />
             <TextField fx:id="textName">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </TextField>
-            <Label text="Lớp" />
-            <TextField fx:id="textClass">
+            <Label text="Tác giả" />
+            <TextField fx:id="textAuthor">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </TextField>
+            <Label text="Giá tiền" />
+            <TextField fx:id="textPrice" />
+            <Label text="Số lượng" />
+            <TextField fx:id="textQuantity" />
+            <Label text="Năm XB" />
+            <TextField fx:id="textPublishedYear" />
+            <TextField fx:id="imagePathTF">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <ImageView fx:id="bookImageView" fitHeight="125.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+            </ImageView>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="185.0">
                <children>
                   <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#onClickAddButton" prefHeight="25.0" prefWidth="52.0" text="Thêm" />
@@ -125,15 +144,31 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="185.0">
                <children>
+                  <Button fx:id="chooseImage" mnemonicParsing="false" onAction="#onClickChooseImageBtn" text="Chọn ảnh">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button fx:id="exportBtn" mnemonicParsing="false" onAction="#onClickExportButton" prefHeight="25.0" prefWidth="52.0" text="Export" />
                </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="185.0">
                <children>
+                  <ImageView fx:id="chooseImageIconView" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </ImageView>
                   <ImageView fx:id="excelImageView" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../button_icons/excel.png" />
                      </image>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </ImageView>
                </children>
             </HBox>

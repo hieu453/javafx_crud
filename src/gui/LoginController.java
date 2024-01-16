@@ -4,10 +4,10 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import core.HRMDAO;
 import core.Human;
-import core.Lecturer;
-import core.Student;
+import core.HumanDAO;
+import core.User;
+import core.Admin;
 import core.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -29,9 +30,9 @@ import services.AuthenticationServiceImp;
 
 public class LoginController implements Initializable {
 	@FXML
-	private RadioButton studentRadio;
+	private RadioButton userRadio;
 	@FXML
-	private RadioButton lecturerRadio;
+	private RadioButton adminRadio;
 	@FXML
 	private ToggleGroup group;
 	@FXML
@@ -46,6 +47,8 @@ public class LoginController implements Initializable {
 	private Label invalidLogin;
 	@FXML
 	private Button loginButton;
+	@FXML
+	private Hyperlink registerLink;
 	@FXML
 	private Button cancelButton;
 	@FXML
@@ -69,30 +72,30 @@ public class LoginController implements Initializable {
 		cancelImageView.setImage(cancelIcon);
 	}
 	
-	
+	@FXML
 	public void onClickLogin(ActionEvent event) {
 		if (validateForm()) {
-			Human user;
+			Human human;
 			
 			if (!passwordTF.isDisabled()) {
-				user = new Lecturer(codeTF.getText(), passwordTF.getText());
+				human = new Admin(codeTF.getText(), passwordTF.getText());
 			} else {
-				user = new Student(codeTF.getText());
+				human = new User(codeTF.getText());
 			}
 			
-			if (authService.login(user)) {
+			if (authService.login(human)) {
 				((Node)event.getSource()).getScene().getWindow().hide();
 				String loggedInName = null;
 				
-				if (user instanceof Lecturer) {
-					loggedInName = HRMDAO.getLecturer(codeTF.getText()).getFullname(); 
+				if (human instanceof Admin) {
+					loggedInName = HumanDAO.getAdmin(codeTF.getText()).getFullname(); 
 				}
 				
-				if (user instanceof Student) {
-					loggedInName = HRMDAO.getStudent(codeTF.getText()).getFullname();
+				if (human instanceof User) {
+					loggedInName = HumanDAO.getUser(codeTF.getText()).getFullname();
 				}
 				
-				int role = group.getSelectedToggle().equals(studentRadio) ? 0 : 1;
+				int role = group.getSelectedToggle().equals(userRadio) ? 0 : 1;
 				UserSession.getInstance(loggedInName, role);
 				showHomeGUI();
 			} else {
@@ -101,12 +104,14 @@ public class LoginController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onClickCancel(ActionEvent event) {
 		((Node)event.getSource()).getScene().getWindow().hide();
 	}
 	
+	@FXML
 	public void radioButtonChanged() {
-		if (group.getSelectedToggle().equals(studentRadio)) {
+		if (group.getSelectedToggle().equals(userRadio)) {
 			resetInput();
 			passwordTF.setDisable(true);
 		} else {
@@ -151,6 +156,23 @@ public class LoginController implements Initializable {
 			homeStage.setScene(new Scene(root));
 			homeStage.setResizable(false);
 			homeStage.setTitle("Home");
+			homeStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void showRegisterGUI(ActionEvent event) {
+		((Node)event.getSource()).getScene().getWindow().hide();
+		
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("RegisterScene.fxml"));
+			Parent root = loader.load();
+			Stage homeStage = new Stage();
+			homeStage.setScene(new Scene(root));
+			homeStage.setResizable(false);
+			homeStage.setTitle("Register");
 			homeStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

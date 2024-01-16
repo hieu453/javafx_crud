@@ -1,6 +1,7 @@
 package gui;
 	
-import core.HRMDAO;
+import core.BookDAO;
+import core.HumanDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -11,7 +12,8 @@ public class LoginGUI extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			new HRMDAO("jdbc:ucanaccess://lib/QLSV.accdb", "", "");
+			new BookDAO("jdbc:ucanaccess://lib/QLS.accdb", "", "");
+			new HumanDAO("jdbc:ucanaccess://lib/QLS.accdb", "", "");
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginScene.fxml"));
 			Parent root = loader.load();
 			primaryStage.setScene(new Scene(root));
